@@ -10,8 +10,8 @@
 * [Connected Components](objectives/connected-components)
 
 ## Graph Problems To Solve
-[Graph Class](/projects/graph_class)
-[Solve Graph](/projects/solve_graph)
+* [Graph Class](/projects/graph_class)
+* [Solve Graph](/projects/solve_graph)
 
 ## Stretch Problems To Solve
-[River Sizes](/projects/river_sizes')
+* [River Sizes](/projects/river_sizes')
