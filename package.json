@@ -1,0 +1,24 @@
+{
+  "name": "graphs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jduell12/CS_Graphs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jduell12/CS_Graphs/issues"
+  },
+  "homepage": "https://github.com/jduell12/CS_Graphs#readme",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}
