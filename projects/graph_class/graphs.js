@@ -11,27 +11,78 @@ class Graph {
      * }
      *
      */
-    constructor() {}
+    constructor() {
+      this.graph = {}
+    }
+
   
     //adds a node to the graph
-    addVertex() {}
+    addVertex(vertex) {
+      this.graph[vertex] = []
+    }
     
     //adds an edge to the graph
-    addEdge() {}
-  
-    //returns the neighbors (edges) for a particular vertex
-    getNeighbors() {}
-  
-    breadthFirstTraversal() {
-        let visited = []
-        
-        this.printPath(visited)
+    addEdge(vertex, edge) {
+      for(let vert in this.graph){
+        if(vert === vertex){
+          this.graph[vertex].push(edge)
+        }
+      }
     }
   
-    depthFirstTraversal() {
-        let visited = []
-        
-        this.printPath(visited)
+    //returns the neighbors (edges) for a particular vertex
+    getNeighbors(vertex) {
+      for(let vert in this.graph){
+        if(vert === vertex){
+          return this.graph[vertex]
+        }
+      }
+    }
+  
+    breadthFirstTraversal(startVert) {
+      let visited = []
+      let queue = [startVert]
+
+      while(queue.length > 0){
+        const vert = queue.shift()
+        if(vert && !queue.includes(vert)){
+          if(!visited.includes(vert)){
+              visited.push(vert)
+
+              let neighbors = this.getNeighbors(vert)
+
+              neighbors.forEach(neighbor => {
+                if(!visited.includes(neighbor)){
+                  queue.push(neighbor)
+                }
+              })
+          }
+        }
+      }
+      this.printPath(visited)
+    }
+  
+    depthFirstTraversal(startVert) {
+      let visited = []
+      let queue = [startVert]
+
+      while(queue.length > 0){
+        const vert = queue.pop()
+        if(vert && !queue.includes(vert)){
+          if(!visited.includes(vert)){
+            visited.push(vert)
+
+            let neighbors = this.getNeighbors(vert)
+
+            neighbors.forEach(neighbor => {
+              if(!visited.includes(neighbor)){
+                queue.push(neighbor)
+              }
+            })
+          }
+        }
+      }
+      this.printPath(visited)
     }
   
     printPath(visited) {
@@ -71,7 +122,8 @@ class Graph {
   graph.addEdge("F", "C");
   graph.addEdge("F", "D");
   graph.addEdge("F", "E");
-  
+
+  console.log(`Graph:`, graph.graph)
   console.log("\nBreadth First Traversal");
   graph.breadthFirstTraversal("A");
   console.log("-----------------------------");
