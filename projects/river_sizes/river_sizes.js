@@ -1,62 +1,66 @@
-  const riverSizes = (matrix) => {
-    // 0 = land
-    // 1 = river
-      // river = horizontal or vertical 1s
-        //# of 1s = size of river
-    // return an array of river sizes, no particular order
-    
+const riverSizes = (matrix) => {
     let n = 0
     let rivers = []
+    let visited = []
 
-    for(let i = 0; i < matrix.length; i++){
-      for(let r = 0; r < matrix[i].length; r++){
-        if(matrix[i][r] === 1){
-          n += 1
-          matrix[i][r] = 0
+    let getNeighbors = (vert) => {
+      neigh = []
+      const r = vert[0]
+      const c = vert[1]
 
-        for(let num = 1; num < matrix[i].length; num++){
-            //the right num of matrix[i][r]
-            if(r+num < matrix[i].length){
-              if(matrix[i][r+num] === 1){
-                n += 1
-                matrix[i][r+num] = 0
-              }
+      //the right num of matrix[i][r]
+      if(c+1 < matrix[0].length){          
+        neigh.push([r, c+1])
+      }
+      //the left num of matrix[i][r]
+      if(c-1 > 0){
+        neigh.push([r, c-1])
+      }
+      //the below num of matrix[i][r]
+      if(r+1 < matrix.length){
+        neigh.push([r+1, c])
+      }
+      //the above num of matrix[i][r]
+      if(r-1 > 0){
+        neigh.push([r-1, c])
+      }
+      
+      return neigh
+    }
+
+    matrix.forEach((row, rowIndex) => {
+      row.forEach((col, colIndex) => {
+        if(!visited.includes([rowIndex, colIndex])){
+        let queue = [[rowIndex, colIndex]]
+
+          while(queue.length > 0){
+            const r = queue.shift()
+
+            if(!visited.includes(r) && matrix[r[0]][r[1]] === 1){
+              visited.push(r)
+              matrix[r[0]][r[1]] = 0
+              n += 1
+
+              let neighbors = getNeighbors([r[0], r[1]])
+
+              neighbors.forEach(neighbor => {
+                if(!visited.includes(neighbor) && !queue.includes(neighbor)){
+                  queue.push(neighbor)      
+                }
+              })
             }
-
-            //the left num of matrix[i][r]
-            if(r-num >= 0){
-              if(matrix[i][r-num] === 1){
-                n += 1
-                matrix[i][r-num] = 0
-              }
-            }
-
-            //the above num of matrix[i][r]
-            if(i+num < matrix.length){ 
-              if(matrix[i+num][r] === 1){
-                n += 1
-                matrix[i+num][r] = 0
-              }
-            }
-
-            //the below num of matrix[i][r]
-            if(i-num >= 0){
-              if(matrix[i-num][r] === 1){
-                n += 1
-                matrix[i-num][r] = 0
-              }
+            else if(!visited.includes(r) && matrix[r[0]][r[1]] === 0){
+              visited.push(r)
             }
           }
         }
-
+    
         if(n > 0){
           rivers.push(n)
           n = 0
         }
-      }
-    }  
-    
-    console.log(`Rivers:`, rivers)
+      })
+    })
 
     return rivers
   };

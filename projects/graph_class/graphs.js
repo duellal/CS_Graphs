@@ -123,6 +123,7 @@ class Graph {
   graph.addEdge("F", "D");
   graph.addEdge("F", "E");
 
+  console.log(`Graph:`, graph.graph)
   console.log("\nBreadth First Traversal");
   graph.breadthFirstTraversal("A");
   console.log("-----------------------------");
